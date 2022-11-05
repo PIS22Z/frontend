@@ -20,6 +20,8 @@ jobs:
               run: npm ci
             - name: Build app
               run: npm run build
+            - name: Run eslint
+              run: npm run lint
             - name: Test Jest
               run: npm run test
 
