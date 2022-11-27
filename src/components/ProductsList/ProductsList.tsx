@@ -1,4 +1,5 @@
-import { Button, IconButton } from '@mui/material';
+import { Button } from '@mui/material';
+import { FreeMode } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
@@ -35,7 +36,12 @@ const ProductsList = () => {
         },
     ];
     return (
-        <Styled.SwiperWrapper slidesPerView={2} spaceBetween={30}>
+        <Styled.SwiperWrapper
+            spaceBetween={10}
+            slidesPerView={1.2}
+            freeMode={true}
+            modules={[FreeMode]}
+        >
             {productsMock.map(({ name, price }) => (
                 <Styled.Slide key={name}>
                     <img src={productImg} alt={name} />
