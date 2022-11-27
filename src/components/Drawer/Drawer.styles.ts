@@ -9,6 +9,13 @@ export const Wrapper = styled.div`
     padding: 70px 30px;
 `;
 
+export const MenuWrapper = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+`;
+
 export const Item = styled.span`
     display: flex;
     align-items: center;

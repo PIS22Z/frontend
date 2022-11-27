@@ -2,9 +2,9 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import { Button, Divider, Drawer as DrawerMui } from '@mui/material';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import { Divider, Drawer as DrawerMui } from '@mui/material';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 import * as Styled from './Drawer.styles';
 
@@ -13,7 +13,10 @@ const Drawer = () => {
 
     return (
         <>
-            <MenuIcon onClick={() => setActive(true)} />
+            <Styled.MenuWrapper>
+                <MenuIcon onClick={() => setActive(true)} />
+                <ShoppingCartOutlinedIcon />
+            </Styled.MenuWrapper>
             <DrawerMui open={active} onClose={() => setActive(false)}>
                 <Styled.Wrapper>
                     <Styled.ItemLink to="/">
