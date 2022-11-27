@@ -2,20 +2,28 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import ListAltOutlinedIcon from '@mui/icons-material/ListAltOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
 import ShoppingBagOutlinedIcon from '@mui/icons-material/ShoppingBagOutlined';
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Divider, Drawer as DrawerMui } from '@mui/material';
 import { useState } from 'react';
+import { useSelector } from 'react-redux';
 
+import { RootState } from '../../redux/store';
 import * as Styled from './Drawer.styles';
 
 const Drawer = () => {
     const [active, setActive] = useState(false);
+    const { products } = useSelector((state: RootState) => state.products);
 
     return (
         <>
             <Styled.MenuWrapper>
                 <MenuIcon onClick={() => setActive(true)} />
-                <ShoppingCartOutlinedIcon />
+                <Styled.Badge
+                    badgeContent={products.length > 0 ? products.length : '0'}
+                    color="primary"
+                >
+                    <ShoppingCartIcon />
+                </Styled.Badge>
             </Styled.MenuWrapper>
             <DrawerMui open={active} onClose={() => setActive(false)}>
                 <Styled.Wrapper>

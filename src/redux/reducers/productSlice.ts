@@ -1,4 +1,5 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+
 import { Product } from '../../models/product.model';
 
 type InitialStateType = {
@@ -21,11 +22,8 @@ export const productSlice = createSlice({
                 (product) => product.id !== payload.productId
             );
         },
-        addProduct: (
-            state,
-            { payload }: PayloadAction<{ product: Product }>
-        ) => {
-            state.products = [...state.products, payload.product];
+        addProduct: (state, { payload }: PayloadAction<Product>) => {
+            state.products = [...state.products, payload];
         },
     },
 });

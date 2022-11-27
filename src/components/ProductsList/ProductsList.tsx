@@ -1,10 +1,12 @@
 import { Button } from '@mui/material';
+import { useDispatch } from 'react-redux';
 import { FreeMode } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/pagination';
 
 import productImg from '../../assets/productExample.jpg';
 import { Product } from '../../models/product.model';
+import { addProduct } from '../../redux/reducers/productSlice';
 import * as Styled from './ProductsList.styles';
 
 const ProductsList = () => {
@@ -35,6 +37,12 @@ const ProductsList = () => {
             price: 20,
         },
     ];
+    const dispatch = useDispatch();
+
+    const handleAddProduct = (product: Product) => {
+        dispatch(addProduct(product));
+    };
+
     return (
         <Styled.SwiperWrapper
             spaceBetween={10}
@@ -42,13 +50,24 @@ const ProductsList = () => {
             freeMode={true}
             modules={[FreeMode]}
         >
-            {productsMock.map(({ name, price }) => (
+            {productsMock.map(({ id, name, price }) => (
                 <Styled.Slide key={name}>
                     <img src={productImg} alt={name} />
                     <Styled.TextWrapper>
                         <Styled.Name>{name}</Styled.Name>
                         <Styled.Price>{price}$</Styled.Price>
-                        <Button variant="contained">Add to cart</Button>
+                        <Button
+                            variant="contained"
+                            onClick={() =>
+                                handleAddProduct({
+                                    id: id,
+                                    name: name,
+                                    price: price,
+                                })
+                            }
+                        >
+                            Add to cart
+                        </Button>
                     </Styled.TextWrapper>
                 </Styled.Slide>
             ))}

@@ -5,4 +5,4 @@ export const store = configureStore({
     reducer: { products: productReducer },
 });
 
-export type StoreState = ReturnType<typeof store.getState>;
+export type RootState = ReturnType<typeof store.getState>;

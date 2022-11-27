@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import BadgeMui from '@mui/material/Badge';
 import { Link } from 'react-router-dom';
 
 export const Wrapper = styled.div`
@@ -14,6 +15,14 @@ export const MenuWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     margin-bottom: 30px;
+`;
+
+export const Badge = styled(BadgeMui)`
+    & .MuiBadge-badge {
+        right: -3;
+        top: 13;
+        padding: '0 4px';
+    }
 `;
 
 export const Item = styled.span`
