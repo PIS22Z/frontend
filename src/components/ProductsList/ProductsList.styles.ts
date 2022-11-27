@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { TextField as TextFieldMui } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 export const SwiperWrapper = styled(Swiper)`
@@ -38,4 +39,19 @@ export const Name = styled.span`
 export const Price = styled.span`
     font-weight: bold;
     font-size: 17px;
+`;
+
+export const TextField = styled(TextFieldMui)`
+    margin-top: 40px;
+    && label {
+        color: rgba(0, 0, 0, 0.6);
+        font-weight: bold;
+    }
+    div {
+        border-radius: 20px;
+        ::before,
+        ::after {
+            display: none;
+        }
+    }
 `;

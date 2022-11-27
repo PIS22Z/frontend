@@ -6,6 +6,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Divider, Drawer as DrawerMui } from '@mui/material';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import { RootState } from '../../redux/store';
 import * as Styled from './Drawer.styles';
@@ -13,7 +14,9 @@ import * as Styled from './Drawer.styles';
 const Drawer = () => {
     const [active, setActive] = useState(false);
     const { products } = useSelector((state: RootState) => state.products);
+    const navigate = useNavigate();
 
+    const handleBadgeClick = () => navigate('/orders');
     return (
         <>
             <Styled.MenuWrapper>
@@ -21,6 +24,7 @@ const Drawer = () => {
                 <Styled.Badge
                     badgeContent={products.length > 0 ? products.length : '0'}
                     color="primary"
+                    onClick={handleBadgeClick}
                 >
                     <ShoppingCartIcon />
                 </Styled.Badge>
