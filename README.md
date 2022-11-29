@@ -1,10 +1,26 @@
-## Wymagania
+# Wymagania
+- Node.js
 
-- minimum Node.js 18.12.1 LTS
+# Uruchomienie aplikacji
 
-## Uruchomienie aplikacji
+    npm i
+    npm run
 
-```bash
-npm i
-REACT_APP_API_URL='https://pis.rasztabiga.me/api' npm start
-```
+# Skrypty
+
+ ### Uruchomienie serwera deweloperskiego pod adresem [http://localhost:3000](http://localhost:3000).
+
+    npm start
+>Zalecane jest użycie trybu **mobile view**
+
+### Uruchomienie testów
+
+    npm test
+
+### Budowanie aplikacji w wersji produkcyjnej
+
+    npm run build
+
+### Uruchomienie lintera
+
+    npm run lint
