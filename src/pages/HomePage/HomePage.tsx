@@ -1,8 +1,11 @@
 import Drawer from '../../components/Drawer';
 import ProductsList from '../../components/ProductsList';
 import * as Styled from './Homepage.styles';
+import useHomePage from './useHomePage';
 
 const HomePage = () => {
+    useHomePage();
+
     return (
         <Styled.Container>
             <Drawer />
