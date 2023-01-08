@@ -58,15 +58,15 @@ const KitchenPage = () => {
         { onSuccess: () => refetch() }
     );
 
-    const handleAcceptOffer = (id: string) => {
+    const handleAcceptOrder = (id: string) => {
         mutateAccept(id);
     };
 
-    const handleRejectOffer = (id: string) => {
+    const handleRejectOrder = (id: string) => {
         mutateReject(id);
     };
 
-    const handleReadyOffer = (id: string) => {
+    const handleReadyOrder = (id: string) => {
         mutateReady(id);
     };
 
@@ -124,10 +124,10 @@ const KitchenPage = () => {
                                             variant="contained"
                                             disabled={row.status !== 'PAID'}
                                             onClick={() =>
-                                                handleAcceptOffer(row.id)
+                                                handleAcceptOrder(row.id)
                                             }
                                         >
-                                            Accept offer
+                                            Accept Order
                                         </Button>
                                     </TableCell>
                                     <TableCell align="right">
@@ -135,10 +135,10 @@ const KitchenPage = () => {
                                             variant="contained"
                                             disabled={row.status !== 'PAID'}
                                             onClick={() =>
-                                                handleRejectOffer(row.id)
+                                                handleRejectOrder(row.id)
                                             }
                                         >
-                                            Reject offer
+                                            Reject Order
                                         </Button>
                                     </TableCell>
                                     <TableCell align="right">
@@ -146,10 +146,10 @@ const KitchenPage = () => {
                                             variant="contained"
                                             disabled={row.status !== 'ACCEPTED'}
                                             onClick={() =>
-                                                handleReadyOffer(row.id)
+                                                handleReadyOrder(row.id)
                                             }
                                         >
-                                            Offer ready
+                                            Order ready
                                         </Button>
                                     </TableCell>
                                 </TableRow>
