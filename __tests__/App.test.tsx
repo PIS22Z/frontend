@@ -1,1 +1,3 @@
-export const TODO = null;
+describe('Logger', () => {
+    test.todo('Empty pass');
+});
