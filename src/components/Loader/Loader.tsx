@@ -2,10 +2,15 @@ import { CircularProgress } from '@mui/material';
 
 import * as Styled from './Loader.styles';
 
-const Loader = () => {
+type Props = {
+    description?: string;
+};
+
+const Loader = ({ description }: Props) => {
     return (
         <Styled.LoaderWrapper>
             <CircularProgress />
+            {description && <span>{description}</span>}
         </Styled.LoaderWrapper>
     );
 };

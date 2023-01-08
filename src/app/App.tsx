@@ -1,5 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
+import DeliveryPage from '../pages/DeliveryPage';
 import HomePage from '../pages/HomePage';
 import KitchenPage from '../pages/KitchenPage';
 import PaymentPage from '../pages/PaymentPage';
@@ -21,6 +22,7 @@ const App = () => {
                     path="/kitchen/:restaurantId"
                     element={<KitchenPage />}
                 />
+                <Route path="/delivery" element={<DeliveryPage />} />
             </Routes>
         </>
     );
