@@ -30,10 +30,9 @@ const ProductsPage = () => {
     const { products: selectedProducts } = useSelector(
         (state: RootState) => state.products
     );
-    const productsPriceSum = selectedProducts.reduce(
-        (sum, val) => sum + val.count * val.price,
-        0
-    );
+    const productsPriceSum = selectedProducts
+        .reduce((sum, val) => sum + val.count * val.price, 0)
+        .toFixed(2);
     const navigate = useNavigate();
     const { restaurantId } = useParams<{ restaurantId: string }>();
     const { mutateAsync: mutateFinalize } = useMutation(

@@ -1,3 +1,4 @@
+import { statusMap } from './../pages/StatusPage/StatusPage';
 import axios from 'axios';
 import { useEffect } from 'react';
 import { useQuery } from 'react-query';
@@ -14,7 +15,7 @@ type OrderStatus = {
     deliveryDetails: {
         address: string;
     };
-    status: string;
+    status: keyof typeof statusMap;
 };
 
 export const useOrderStatus = (orderId: string | undefined) => {
