@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { v4 as uuidv4 } from 'uuid';
 
 import { Product } from '../../models/product.model';
 
@@ -22,15 +21,15 @@ export const productSlice = createSlice({
             state.orderId = payload.id;
         },
 
-        removeProduct: (state, { payload }: PayloadAction<{ id: number }>) => {
+        removeProduct: (state, { payload }: PayloadAction<{ id: string }>) => {
             const foundProduct = state.products.find(
                 (product) => product.id === payload.id
             );
             if (!foundProduct) return;
 
             axios.put(`/api/orders/${state.orderId}/remove`, {
-                productId: uuidv4(),
-                quantity: foundProduct.count - 1,
+                productId: payload.id,
+                quantity: 1,
             });
 
             if (foundProduct.count >= 2) {
@@ -57,8 +56,8 @@ export const productSlice = createSlice({
 
             if (foundProduct) {
                 axios.put(`/api/orders/${state.orderId}/add`, {
-                    productId: uuidv4(),
-                    quantity: foundProduct.count + 1,
+                    productId: payload.id,
+                    quantity: 1,
                 });
                 state.products = state.products.map((product) =>
                     product.id === payload.id
@@ -72,7 +71,7 @@ export const productSlice = createSlice({
                 );
             } else {
                 axios.put(`/api/orders/${state.orderId}/add`, {
-                    productId: uuidv4(),
+                    productId: payload.id,
                     quantity: 1,
                 });
                 state.products = [
