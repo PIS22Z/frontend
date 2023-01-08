@@ -6,7 +6,7 @@ import * as Styled from './StatusPage.styles';
 
 const StatusPage = () => {
     const { orderId } = useParams<{ orderId: string }>();
-    const { isLoading, orderStatus } = useOrderStatus(orderId!);
+    const { isLoading, orderStatus } = useOrderStatus(orderId);
 
     return !isLoading ? (
         <Styled.StatusContainer>

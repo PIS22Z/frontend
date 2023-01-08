@@ -16,7 +16,7 @@ type OrderStatus = {
     status: string;
 };
 
-export const useOrderStatus = (orderId: string) => {
+export const useOrderStatus = (orderId: string | undefined) => {
     const { data: orderResponse, isLoading } = useQuery(
         'orderStatus',
         () => axios.get(`/api/orders/${orderId}`).then((response) => response),

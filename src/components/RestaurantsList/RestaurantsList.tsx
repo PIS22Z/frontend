@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useQuery } from 'react-query';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import Loader from '../Loader';
 import * as Styled from './RestaurantsList.styles';
