@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -8,7 +8,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { useQuery } from 'react-query';
+import { useMutation, useQuery } from 'react-query';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
@@ -26,6 +26,7 @@ import * as Styled from './ProductsPage.styles';
 const ProductsPage = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const dispatch = useDispatch();
+    const [address, setAddress] = useState('');
     const { products: selectedProducts } = useSelector(
         (state: RootState) => state.products
     );
@@ -35,7 +36,17 @@ const ProductsPage = () => {
     );
     const navigate = useNavigate();
     const { restaurantId } = useParams<{ restaurantId: string }>();
-
+    const { mutateAsync: mutateFinalize } = useMutation(
+        'finalizeOrder',
+        () =>
+            axios.put(`/api/orders/${orderResponse?.data.id}/finalize`, {
+                userId: uuidv4(),
+                deliveryDetails: {
+                    address: address,
+                },
+            }),
+        { onSuccess: () => navigate(`/payment/${orderResponse?.data.id}`) }
+    );
     const { data: restaurantsResponse, isLoading } = useQuery(
         'restaurants',
         () =>
@@ -74,7 +85,7 @@ const ProductsPage = () => {
     };
 
     const handleFinalizeOrder = () => {
-        navigate(`/payment/${orderResponse?.data.id}`);
+        mutateFinalize();
     };
 
     const handleRemoveProduct = (id: string) => {
@@ -153,11 +164,21 @@ const ProductsPage = () => {
             <Paper sx={{ p: 3 }}>
                 <span>{`Price: ${productsPriceSum} PLN`}</span>
             </Paper>
+            <TextField
+                label="Address"
+                sx={{ m: 1, width: '30ch' }}
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+            />
             <Styled.ButtonsWrapper>
                 <Button variant="contained" onClick={() => navigate('/')}>
                     Back to restaurants
                 </Button>
-                <Button variant="contained" onClick={handleFinalizeOrder}>
+                <Button
+                    variant="contained"
+                    onClick={handleFinalizeOrder}
+                    disabled={selectedProducts.length <= 0 || address === ''}
+                >
                     Finalize order
                 </Button>
             </Styled.ButtonsWrapper>
