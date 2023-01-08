@@ -1,3 +1,3 @@
-describe('Logger', () => {
-    test.todo('Empty pass');
+test('Empty test', () => {
+    console.log('empty');
 });
