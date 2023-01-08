@@ -15,6 +15,24 @@ import { useParams } from 'react-router';
 import Loader from '../../components/Loader';
 import * as Styled from './KitchenPage.styles';
 
+type ResponseKitchen = {
+    id: string;
+    restaurantId: string;
+    userId: string;
+    items: {
+        productId: string;
+        productName: string;
+        productPhotoUrl: string;
+        productPrice: number;
+        quantity: number;
+    }[];
+    amount: number;
+    deliveryDetails: {
+        address: string;
+    };
+    status: string;
+};
+
 const KitchenPage = () => {
     const {
         data: kitchenResponse,
@@ -71,15 +89,16 @@ const KitchenPage = () => {
                     <TableBody>
                         {kitchenResponse?.data
                             .filter(
-                                (val: any) => val.restaurantId === restaurantId
+                                (val: ResponseKitchen) =>
+                                    val.restaurantId === restaurantId
                             )
                             .filter(
-                                (val: any) =>
+                                (val: ResponseKitchen) =>
                                     val.status === 'PAID' ||
                                     val.status === 'ACCEPTED' ||
                                     val.status === 'READY_TO_DELIVER'
                             )
-                            .map((row: any) => (
+                            .map((row: ResponseKitchen) => (
                                 <TableRow
                                     key={row.id}
                                     sx={{
@@ -93,7 +112,7 @@ const KitchenPage = () => {
                                     </TableCell>
                                     <TableCell align="right">
                                         {row.items.map(
-                                            (item: any) =>
+                                            (item) =>
                                                 `${item.productName} X ${item.quantity}`
                                         )}
                                     </TableCell>
