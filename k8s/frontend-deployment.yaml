@@ -20,5 +20,7 @@ spec:
                   env:
                       - name: REACT_APP_API_URL
                         value: 'https://pis.rasztabiga.me/api'
+                      - name: DANGEROUSLY_DISABLE_HOST_CHECK
+                        value: 'true'
                   ports:
                       - containerPort: 3000
