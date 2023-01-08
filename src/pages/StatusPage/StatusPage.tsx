@@ -12,7 +12,7 @@ const StatusPage = () => {
         <Styled.StatusContainer>
             <h3>Order status</h3>
             <span>{orderStatus?.status}</span>
-            {orderStatus?.status !== 'FINALIZED' && (
+            {orderStatus?.status !== 'FINISHED' && (
                 <>
                     <Loader />
                     <span>Your order is being proceeded</span>
