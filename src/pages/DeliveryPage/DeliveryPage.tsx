@@ -84,6 +84,7 @@ const DeliveryPage = () => {
     };
 
     const handleFinishDelivery = () => {
+        alert('Order completed!');
         currentOrder && mutateFinish(currentOrder.id);
     };
 
@@ -123,7 +124,11 @@ const DeliveryPage = () => {
                 </>
             ) : (
                 <>
-                    <h3>Order accepted</h3>
+                    <h3>
+                        {status === 'COURIER_ASSIGNED'
+                            ? 'Order accepted'
+                            : 'Order in delivery'}
+                    </h3>
                     <span>Restaurant name: {currentOrder.restaurantName}</span>
                     <span>
                         Restaurant address: {currentOrder.restaurantAddress}

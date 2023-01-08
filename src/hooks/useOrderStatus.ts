@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { useEffect } from 'react';
 import { useQuery } from 'react-query';
 
 type OrderStatus = {
@@ -17,7 +18,11 @@ type OrderStatus = {
 };
 
 export const useOrderStatus = (orderId: string | undefined) => {
-    const { data: orderResponse, isLoading } = useQuery(
+    const {
+        data: orderResponse,
+        isLoading,
+        refetch,
+    } = useQuery(
         'orderStatus',
         () => axios.get(`/api/orders/${orderId}`).then((response) => response),
         {
@@ -27,6 +32,14 @@ export const useOrderStatus = (orderId: string | undefined) => {
     const orderStatus = orderResponse
         ? (orderResponse.data as OrderStatus)
         : null;
+
+    useEffect(() => {
+        const statusInterval = setInterval(() => {
+            refetch();
+        }, 5000);
+
+        return () => clearInterval(statusInterval);
+    }, []);
 
     return { orderStatus, isLoading };
 };

@@ -9,6 +9,7 @@ import {
     TableRow,
 } from '@mui/material';
 import axios from 'axios';
+import { useEffect } from 'react';
 import { useMutation, useQuery } from 'react-query';
 import { useParams } from 'react-router';
 
@@ -57,6 +58,14 @@ const KitchenPage = () => {
         (id: string) => axios.put(`/api/orders/${id}/ready`),
         { onSuccess: () => refetch() }
     );
+
+    useEffect(() => {
+        const ordersInterval = setInterval(() => {
+            refetch();
+        }, 5000);
+
+        return () => clearInterval(ordersInterval);
+    }, []);
 
     const handleAcceptOrder = (id: string) => {
         mutateAccept(id);

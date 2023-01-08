@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import Loader from '../../components/Loader';
@@ -11,13 +12,9 @@ const StatusPage = () => {
     return !isLoading ? (
         <Styled.StatusContainer>
             <h3>Order status</h3>
-            <span>{orderStatus?.status}</span>
-            {orderStatus?.status !== 'FINISHED' && (
-                <>
-                    <Loader />
-                    <span>Your order is being proceeded</span>
-                </>
-            )}
+            {orderStatus?.status !== 'REJECTED' &&
+                orderStatus?.status !== 'DELIVERED' && <Loader />}
+            <span>Order status: {orderStatus?.status}</span>
         </Styled.StatusContainer>
     ) : (
         <Loader />
