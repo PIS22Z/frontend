@@ -69,11 +69,11 @@ describe('Delivery page', () => {
     });
 
     await waitFor(async () => {
-      screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i))!;
+      screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i));
     }, {timeout: 5500});
 
-    const btn_accept = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i))!;
-    await act(async () => await userEvent.click((btn_accept)));
+    const btn_accept = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i));
+    await act(async () => btn_accept ? await userEvent.click((btn_accept)) : fail("Element not found"));
 
     expect(mockedAxiosPut).lastCalledWith(expect.stringMatching(/(.*?)accept/d), expect.any(Object));
 
@@ -92,12 +92,14 @@ describe('Delivery page', () => {
     });
 
     await waitFor(async () => {
-      screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i))!;
+      screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i));
     }, {timeout: 5500});
     expect(mockedAxiosGet).toBeCalledTimes(1);
 
-    const btn_reject = screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i))!;
-    await act(async () => await userEvent.click((btn_reject)))
+    const btn_reject = screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i));
+    await act(async () => btn_reject ? await userEvent.click((btn_reject)) : fail("Element not found"));
+
+
 
     expect(mockedAxiosGet).toBeCalledTimes(2);
 
@@ -116,14 +118,17 @@ describe('Delivery page', () => {
     });
 
     await waitFor(async () => {
-      screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i))!;
+      screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i));
     }, {timeout: 5500});
 
-    let btn = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i))!;
-    await act(async () => await userEvent.click((btn)));
+    let btn = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i));
+    await act(async () => btn ? await userEvent.click((btn)) : fail("Element not found"));
 
-    btn = (await screen.findAllByRole('button')).find(e => e.textContent?.match(/start/i))!;
-    await act(async () => await userEvent.click((btn)));
+
+
+    btn = (await screen.findAllByRole('button')).find(e => e.textContent?.match(/start/i));
+    await act(async () => btn ? await userEvent.click((btn)) : fail("Element not found"));
+
 
     expect(mockedAxiosPut).lastCalledWith(expect.stringMatching(/(.*?)start/d), expect.any(Object));
 
@@ -131,7 +136,7 @@ describe('Delivery page', () => {
 
   it('should finish delivery', async () => {
     const jsdomAlert = window.alert;
-    window.alert = () => {};
+    window.alert = () => {null};
     mockedAxiosGet.mockResolvedValue({data: {...testOrder, status: 'DELIVERY_IN_PROGRESS'}});
     mockedAxiosPut.mockResolvedValue({data: testOrder});
 
@@ -144,14 +149,15 @@ describe('Delivery page', () => {
     });
 
     await waitFor(async () => {
-      screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i))!;
+      screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i));
     }, {timeout: 5500});
 
-    let btn = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i))!;
-    await act(async () => await userEvent.click((btn)));
+    let btn = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i));
+    await act(async () => btn ? await userEvent.click((btn)) : fail("Element not found"));
 
-    btn = (await screen.findAllByRole('button')).find(e => e.textContent?.match(/finish/i))!;
-    await act(async () => await userEvent.click((btn)));
+    btn = (await screen.findAllByRole('button')).find(e => e.textContent?.match(/finish/i));
+    await act(async () => btn ? await userEvent.click((btn)) : fail("Element not found"));
+
 
     expect(mockedAxiosPut).lastCalledWith(expect.stringMatching(/(.*?)finish/d), expect.any(Object));
     window.alert = jsdomAlert;

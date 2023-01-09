@@ -132,7 +132,7 @@ describe('Product page', () => {
       )
     });
     const btns = await screen.findAllByRole('button');
-    const btn = btns.find(e => e.textContent?.match(/Finalize/i))!;
+    const btn = btns.find(e => e.textContent?.match(/Finalize/i));
 
     expect(btn).toBeDisabled();
   });
@@ -151,10 +151,8 @@ describe('Product page', () => {
     expect(screen.getByText(2)).toBeInTheDocument();
     expect(screen.getByText(/Price: 8.00 PLN/i)).toBeInTheDocument();
 
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/add/i))!;
-    act(() => {
-      userEvent.click(btn);
-    });
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/add/i));
+    act(() => btn ? userEvent.click(btn) : fail('Element not found'));
 
     expect(screen.getByText(testProducts[0].name)).toBeInTheDocument();
     expect(screen.getByText(testProducts[0].price)).toBeInTheDocument();
@@ -178,10 +176,8 @@ describe('Product page', () => {
     expect(screen.getByText(2)).toBeInTheDocument();
     expect(screen.getByText(/Price: 8.00 PLN/i)).toBeInTheDocument();
 
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/remove/i))!;
-    act(() => {
-      userEvent.click(btn);
-    });
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/remove/i));
+    act(() => btn ? userEvent.click(btn) : fail('Element not found'));
 
     expect(screen.getByText(testProducts[0].name)).toBeInTheDocument();
     expect(screen.getByText(testProducts[0].price)).toBeInTheDocument();
@@ -200,11 +196,16 @@ describe('Product page', () => {
     });
 
     expect(await screen.findByText(testProducts[0].name)).toBeInTheDocument();
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/remove/i))!;
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/remove/i));
 
     act(() => {
-      userEvent.click(btn);
-      userEvent.click(btn);
+      if (btn) {
+        userEvent.click(btn);
+        userEvent.click(btn);
+      }
+      else {
+        fail('Element not found');
+      }
     });
 
     expect(screen.getByText(testProducts[0].name)).toBeInTheDocument();
@@ -227,11 +228,8 @@ describe('Product page', () => {
     });
 
     expect(await screen.findByText(testProducts[0].name)).toBeInTheDocument();
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/back/i))!;
-
-    act(() => {
-      userEvent.click(btn);
-    });
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/back/i));
+    act(() => btn ? userEvent.click(btn) : fail('Element not found'));
 
     expect(nav).lastCalledWith(`/`);
 
@@ -250,12 +248,12 @@ describe('Product page', () => {
     });
 
     const textBox = await screen.findByLabelText(/address/i);
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/Finalize/i))!;
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/Finalize/i));
 
     await act(async () => {
       userEvent.type(textBox, testAddress);
       userEvent.tab();
-      await userEvent.click(btn);
+      btn ? await userEvent.click(btn) : fail('Element not found');
     });
 
     expect(nav).lastCalledWith(expect.stringMatching(/payment\//d));

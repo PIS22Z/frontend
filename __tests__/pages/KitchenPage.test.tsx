@@ -132,19 +132,19 @@ describe("Kitchen page", () => {
       )
     });
 
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/ready/i))!;
-    expect(btn).toBeDisabled();
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/ready/i));
+    btn ? await expect(btn).toBeDisabled() : fail("Element not found");
 
   });
 
   it('should reject order', async () => {
     const refetchMock = jest.fn();
-    mockedAxiosPut.mockResolvedValue(new Promise(() => {}));
+    mockedAxiosPut.mockResolvedValue(new Promise(() => {null}));
     mockedQuery.mockReturnValue({...queryResponse, refetch: refetchMock});
     mockedMutation.mockImplementation((mutationKey, mutationFn, options) => {
       return {...mutationResponse, mutateAsync: () => {
         if(options?.onSuccess) options.onSuccess({}, {}, {});
-        return mutationFn!(restaurantId);
+        return mutationFn ? mutationFn(restaurantId) : fail('mutation query not provided');
       }};
     });
 
@@ -156,12 +156,12 @@ describe("Kitchen page", () => {
       )
     });
 
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i))!;
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i));
     expect(refetchMock).toBeCalledTimes(0);
     expect(mockedAxiosPut).toBeCalledTimes(0);
 
     await act(async () => {
-      await userEvent.click(btn);
+      btn ? await userEvent.click(btn) : fail('Element not found');
     });
     expect(refetchMock).toBeCalledTimes(1);
     expect(mockedAxiosPut).lastCalledWith(expect.stringContaining(`/api/orders/${restaurantId}/reject`));
@@ -169,7 +169,7 @@ describe("Kitchen page", () => {
 
   it('should make order ready', async () => {
     const refetchMock = jest.fn();
-    mockedAxiosPut.mockResolvedValue(new Promise(() => {}));
+    mockedAxiosPut.mockResolvedValue(new Promise(() => {null}));
     mockedQuery.mockReturnValue({...queryResponse,
       data: {data: [{...mockResponse, status: 'ACCEPTED'}]},
       refetch: refetchMock
@@ -177,7 +177,7 @@ describe("Kitchen page", () => {
     mockedMutation.mockImplementation((mutationKey, mutationFn, options) => {
       return {...mutationResponse, mutateAsync: () => {
         if(options?.onSuccess) options.onSuccess({}, {}, {});
-        return mutationFn!(restaurantId);
+        return mutationFn ? mutationFn(restaurantId) : fail('mutation query not provided');
       }};
     });
 
@@ -189,23 +189,23 @@ describe("Kitchen page", () => {
       )
     });
 
-    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/ready/i))!;
+    const btn = screen.getAllByRole('button').find(e => e.textContent?.match(/ready/i));
     expect(btn).toBeEnabled();
     expect(refetchMock).toBeCalledTimes(0);
     expect(mockedAxiosPut).toBeCalledTimes(0);
 
     await act(async () => {
-      await userEvent.click(btn);
+      btn ? await userEvent.click(btn) : fail("Element not found");
     });
 
     expect(refetchMock).toBeCalledTimes(1);
     expect(mockedAxiosPut).lastCalledWith(expect.stringContaining(`/api/orders/${restaurantId}/ready`));
 
-    const btn_accept = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i))!;
-    const btn_reject = screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i))!;
+    const btn_accept = screen.getAllByRole('button').find(e => e.textContent?.match(/accept/i));
+    const btn_reject = screen.getAllByRole('button').find(e => e.textContent?.match(/reject/i));
 
-    expect(btn_accept).toBeDisabled();
-    expect(btn_reject).toBeDisabled();
+    btn_accept ? expect(btn_accept).toBeDisabled() : fail("Element not found");
+    btn_reject ? expect(btn_reject).toBeDisabled() : fail("Element not found");
 
   });
 
